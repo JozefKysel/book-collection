@@ -16,6 +16,13 @@ export default class Book {
     return response.rows[0];
   };
 
+  public static search = async (author: string, title: string) => {
+    const response = await pool.query(`
+      SELECT * FROM books WHERE array_to_string(author, ',') LIKE '%${author}%';
+    `);
+    return response.rows;
+  }
+
   public static getAll = async () => {
     const response = await pool.query(`
       SELECT * FROM books;

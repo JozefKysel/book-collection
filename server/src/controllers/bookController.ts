@@ -11,6 +11,16 @@ export const save = async (req: Request, res: Response) => {
   }
 }
 
+export const search = async (req: Request, res: Response) => {
+  try {
+    const { author, title } = req.query;
+    const searchResult: Book[] = await Book.search(author, title);
+    res.status(200).send(searchResult);
+  } catch {
+    res.status(500);
+  }
+}
+
 export const getAll = async (req: Request, res: Response) => {
   try {
     const response: Book[] = await Book.getAll();
